@@ -8,6 +8,7 @@
 The primary goal is to identify which product and store attributes play the most crucial roles in increasing sales. This insight allows retailers to optimize their inventory, marketing, and store management strategies . 
 
 ## Data Source: 
+sales_predictions_2023.csv
 
 For this dataset, there were 8523 rows and 12 columns.
 
