@@ -40,6 +40,6 @@ Cleaned the dataset by handling missing values using group-wise imputation strat
 <img width="932" height="731" alt="download" src="https://github.com/user-attachments/assets/dc25f0e6-ce66-4de4-8a26-69cbe6786bfb" />
 
 
-- Correlation analysis revealed that Item MRP has a moderate positive impact on Outlet Sales (0.57). This suggests that pricing strategy is a key driver of total revenue.
+- Correlation analysis revealed that Item MRP has a strong positive impact on Outlet Sales (0.57). This suggests that pricing strategy is a key driver of total revenue.
 
 
