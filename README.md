@@ -1,53 +1,83 @@
-# Prediction-of-Product-Sales
+# Big Mart Sales Prediction
 
-<p align = "center"> 
-  <img src = "https://github.com/user-attachments/assets/0fe5fc53-79f9-42bb-ac92-90083372b2b0">
-</p>
 
-## Objective
-The primary goal is to identify which product and store attributes play the most crucial roles in increasing sales. This insight allows retailers to optimize their inventory, marketing, and store management strategies . 
 
-## Data Source: 
-sales_predictions_2023.csv
+## Business problem
+A retail chain operating multiple outlets wants to understand which product and store attributes drive sales performance, enabling better decisions around inventory and store management. Using historical sales data, this project builds a predictive model to forecast item level sales and identify the key drivers behind them. 
 
+## Data 
 For this dataset, there were 8523 rows and 12 columns.
 
+| Variable Name | Description |
+|---|---|
+| Item_Identifier | Product ID |
+| Item_Weight | Weight of product |
+| Item_Fat_Content | Whether the product is low-fat or regular |
+| Item_Visibility | The percentage of total display area of all products in a store allocated to the particular product |
+| Item_Type | The category to which the product belongs |
+| Item_MRP | Maximum Retail Price (list price) of the product |
+| Outlet_Identifier | Store ID |
+| Outlet_Establishment_Year | The year in which the store was established |
+| Outlet_Size | The size of the store in terms of ground area covered |
+| Outlet_Location_Type | The type of area in which the store is located |
+| Outlet_Type | Whether the outlet is a grocery store or some sort of supermarket |
+| Item_Outlet_Sales | **Target variable** — Sales of the product in the particular store |
 
-## Data Dictionary
+## Data Understanding & Exploration
 
-<p align = "center"> 
-  <img src = "https://github.com/user-attachments/assets/b4fd8ab7-ac2a-4398-a272-6ebed3f6ff92">
-</p>
-
-## Data Preparation
-
-Cleaned the dataset by handling missing values using group-wise imputation strategy and fixed categorical inconsistencies to ensure data integrity for modeling
-
-## Exploratory Data Analysis
-
-```text
-- During the exploratory data analysis, a boxplot and histogram was visualized for each numeric datatype column.
-- Also, a countplot and boxplot was visualized for each categorical column.
-
-```
-
-<img width="989" height="690" alt="Item outlet sales" src="https://github.com/user-attachments/assets/a23a05ef-5665-438f-8e35-c0bd6d9922ab" />
-
-
-- Distribution of Item_Outlet_Sales is right-skewed, showing that the majority of products have relatively low sales. While there a numerous outliers on the right as boxplot shows , which represent high-performing products that significantly drive up the average sales.
-
-### HeatMap Analysis 
-<img width="932" height="731" alt="download" src="https://github.com/user-attachments/assets/dc25f0e6-ce66-4de4-8a26-69cbe6786bfb" />
+- Confirmed no duplicate records were present in the dataset
+- Standardized inconsistent labels in Item_Fat_Content 
+- Identified missing values in Item_Weight and Outlet_Size — temporarily filled with placeholders to avoid data leakage.
+- Validated data for impossible or unrealistic values
 
 
-- Correlation analysis revealed that Item MRP has a strong positive impact on Outlet Sales (0.57). This suggests that pricing strategy is a key driver of total revenue.
+### Key Findings
 
-<img width="1142" height="663" alt="Sale Trend" src="https://github.com/user-attachments/assets/ccfa383e-f483-4090-99c8-f322f5388527" />
+- Higher-priced items consistently generate more sales.
+- Supermarket Type 3 achieves the highest average sales despite having fewer products than Type 1.
+- Grocery Stores have the lowest average sales by far. 
+
+#### Sales Trend Across Price Segments
+
+<img width="980" height="508" alt="Sales Trend Across Price Segments" src="https://github.com/user-attachments/assets/139a7017-9b2c-488a-8130-653da437a97a" />
 
 
-<img width="1977" height="629" alt="Volume" src="https://github.com/user-attachments/assets/ddc200f9-171c-451c-9a96-30a684492455" />
+*Items with higher retail prices show a clear upward trend in total outlet sales, confirming MRP as a strong sales driver.*
+
+#### Outlet Type: Volume vs Sales Performance
+
+<img width="981" height="525" alt="Outlet Type - Vlume vs Sales Performacne" src="https://github.com/user-attachments/assets/2d55a634-b9f5-431a-acd6-63cb0b9e37d9" />
 
 
+*Despite Supermarket Type 1 carrying the most products, Type 3 outlets generate significantly higher average sales,suggesting that outlet type has more influence on sales than product volume alone.*
 
 
+## Data preparation 
 
+- Split data into training and testing sets.  
+- Applied one-hot encoding to nominal categorical features.  
+- Used ordinal encoding for ordered categories.  
+- Scaled numerical features for consistency.  
+- Imputed missing values using appropriate strategies. 
+
+
+## Models
+
+    - Linear Regression Model
+    - Random Forest Regressor Model
+    - Tuned Random Forest Regressor Model
+
+## Model Performance Comparison
+
+| Model                  | RMSE (Test) | MAE (Test) | R² (Test) |
+|------------------------|-------------|------------|-----------|
+| Linear Regression      | 1095.119    | 806.046    | 0.565     |
+| Random Forest (Base)   | 1132.493    | 785.190    | 0.535     |
+| Random Forest (Tuned)  | **1042.471**| **726.232**| **0.606** |
+
+
+- The final model selected is the **Tuned Random Forest**, as it achieved the best balance between accuracy and generalization.
+
+- On average, sales predictions are off by $726 per item
+- Explains 61% of the differences in sales across outlets
+- Notably, Linear Regression served as a strong baseline suggesting the data holds meaningful linear patterns
